@@ -115,7 +115,7 @@ const questions = [
         ]
     },
     {
-        question: 'Uma das principais fontes de energia no mundo e que não é renovável é:',
+        question: 'O biodiesel e o etanol são fontes de energia:',
         tip: 'Não... esta não é a resposta correta. Vou te dar uma dica!:\nA principal característica destas fontes de energia é a capacidade de serem cultivadas novamente.',
         img: 'pergunta_3_v2.jpg',
         answers: [
