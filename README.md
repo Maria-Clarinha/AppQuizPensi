@@ -1,6 +1,6 @@
 # AppQuizPensi
 
-O quiz pode ser acessado maria-clarinha.github.io/AppQuizPensi/
+O quiz pode ser acessado em: maria-clarinha.github.io/AppQuizPensi/
 
 
 ## Referências
