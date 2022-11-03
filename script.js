@@ -1,17 +1,23 @@
 // Referências
 // YouTube: https://www.youtube.com/watch?v=riDzcEQbX6k&list=PLZlA0Gpn_vH_XnZHin-Vjma8KylU-N0X8&index=1&t=66s
 // Site Embrapa: https://www.embrapa.br/ccweb/jogos/quiz-biomas-do-brasil
+// Stackoverflow: https://stackoverflow.com/questions/8683528/embed-image-in-a-button-element
+
+const titleContainerElement = document.getElementById('title-container')
+
+const scoreContainerElemnt = document.getElementById('score-container')
+const scoreElement = document.getElementById('score')
 
 const startButton = document.getElementById('start-btn')
 const nextButton = document.getElementById('next-btn')
-//const scoreButton = document.getElementById('score-btn')
-const questionContainerElement = document.getElementById('question-container')
 
+const questionContainerElement = document.getElementById('question-container')
 const questionElement = document.getElementById('question')
+const questionImgElement = document.getElementById('question-img')
+
 const answerButtonsElement = document.getElementById('answer-buttons')
 
-let score = 0
-let shuffledQuestions, currentQuestionIndex
+let shuffledQuestions, currentQuestionIndex, score
 
 startButton.addEventListener('click', startGame)
 nextButton.addEventListener('click', () => {
@@ -20,10 +26,12 @@ nextButton.addEventListener('click', () => {
 })
 
 function startGame() {
+    titleContainerElement.classList.add('hide')
     startButton.classList.add('hide')
     shuffledQuestions = questions.sort(() => Math.random() - .5)
     currentQuestionIndex = 0
-    questionContainerElement.classList.remove('hide')
+    score = 0
+    questionContainerElement.classList.remove('hide')    
     setNextQuestion()
 }
 
@@ -33,7 +41,18 @@ function setNextQuestion() {
 }
 
 function showQuestion(question) {
+    const imgPath = './img/'
+
     questionElement.innerText  = question.question
+    if (question.show_question){
+        questionElement.classList.remove('hide')
+    } else{
+        questionElement.classList.add('hide')
+    }
+
+    questionImgElement.setAttribute("src", imgPath.concat(question.img))
+    questionImgElement.setAttribute("alt", question.question)
+
     question.answers.forEach(answer => {
         const button = document.createElement('button')
         button.innerText = answer.text
@@ -46,14 +65,24 @@ function showQuestion(question) {
     })
 }
 
+function showScore() {
+    startButton.innerText = 'Reiniciar'
+        startButton.classList.remove('hide')
+        
+        questionContainerElement.classList.add('hide')
+
+        scoreElement.innerHTML = 'Sua pontuação foi: '.concat(score, '/10')
+        scoreContainerElemnt.classList.remove('hide')
+}
+
 function resetState() {
     clearStatusClass(document.body)
     nextButton.classList.add('hide')
     while (answerButtonsElement.firstChild) {
         answerButtonsElement.removeChild(answerButtonsElement.firstChild)
     }
-    //scoreButton.textContent = ''
-    score = 0
+    
+    scoreContainerElemnt.classList.add('hide')
 }
 
 function selectAnswer(e) {
@@ -71,9 +100,8 @@ function selectAnswer(e) {
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide')
     } else {
-        startButton.innerText = 'Reiniciar'
-        startButton.classList.remove('hide')
-        //scoreButton.textContent = score
+        resetState()
+        showScore()
     }    
 }
 
@@ -94,8 +122,9 @@ function clearStatusClass(element) {
 const questions = [
     {
         question: 'Que planta produz açúcar, rapadura, etanol e outros produtos?',
+        show_question: false,
         tip: 'Não... esta não é a resposta correta. Vou te dar uma dica!:\nA planta também faz a Garapa - caldo de cana...',
-        img: 'pergunta_1_v2.jpg',
+        img: 'pergunta_1_v2.jpg',        
         answers: [
             { text: 'Milho', correct: false },
             { text: 'Cana-de-açúcar', correct: true },
@@ -105,6 +134,7 @@ const questions = [
     },
     {
         question: 'Uma das principais fontes de energia no mundo e que não é renovável é:',
+        show_question: false,
         tip: 'Não... esta não é a resposta correta. Vou te dar uma dica!:\nÉ desta fonte que se fabrica a gasolina, o óleo diesel...',
         img: 'pergunta_2_v2.jpg',
         answers: [
@@ -116,6 +146,7 @@ const questions = [
     },
     {
         question: 'O biodiesel e o etanol são fontes de energia:',
+        show_question: false,
         tip: 'Não... esta não é a resposta correta. Vou te dar uma dica!:\nA principal característica destas fontes de energia é a capacidade de serem cultivadas novamente.',
         img: 'pergunta_3_v2.jpg',
         answers: [
@@ -127,6 +158,7 @@ const questions = [
     },
     {
         question: 'Além das plantas, de onde mais pode vir a matéria-prima para a produção de biodiesel?',
+        show_question: false,
         tip: 'Não... esta não é a resposta correta. Vou te dar uma dica!:\nBiodiesel também pode ser produzido a partir de substâncias de origem animal.',
         img: 'pergunta_4_v2.jpg',
         answers: [
@@ -138,6 +170,7 @@ const questions = [
     },
     {
         question: 'Quais dessas plantas podem ser utilizadas para produzir biodiesel?',
+        show_question: false,
         tip: 'Não... esta não é a resposta correta. Vou te dar uma dica!:\nSão plantas oleaginosas. Dica: Você já experimentou óleo da Canola?',
         img: 'pergunta_5_v2.jpg',
         answers: [
@@ -149,6 +182,7 @@ const questions = [
     },
     {
         question: 'Que tipos de combustível podem ser utilizados em carros de passeio?',
+        show_question: false,
         tip: 'Não... esta não é a resposta correta. Vou te dar uma dica!:\nÓleo diesel e biodiesel são combustíveis de alguns carros de passeio.',
         img: 'pergunta_6_v2.jpg',
         answers: [
@@ -160,6 +194,7 @@ const questions = [
     },
     {
         question: 'Que microrganismo é utilizado na produção de pão e de etanol?',
+        show_question: false,
         tip: 'Não... esta não é a resposta correta. Vou te dar uma dica!:\nLevedura é usado para fermentação de bebidas e combustíveis.',
         img: 'pergunta_7_v2.jpg',
         answers: [
@@ -171,6 +206,7 @@ const questions = [
     },
     {
         question: 'A utilização de biocombustíveis colabora para diminuir qual efeito?',
+        show_question: false,
         tip: 'Não... esta não é a resposta correta. Vou te dar uma dica!:\nEfeito estufa colabora para o aquecimento global. Biocombustíveis diminuem o aquecimento global',
         img: 'pergunta_8_v2.jpg',
         answers: [
@@ -182,6 +218,7 @@ const questions = [
     },
     {
         question: 'O óleo de fritura pode ser utilizado para produção de qual biocombustível?',
+        show_question: false,
         tip: 'Não... esta não é a resposta correta. Vou te dar uma dica!:\nBiodiesel é um combustível que pode ser produzido de maneiras diferentes.',
         img: 'pergunta_9_v2.jpg',
         answers: [
@@ -193,6 +230,7 @@ const questions = [
     },
     {
         question: 'Qual é a planta que pode ser utilizada para a produção de biodiesel e também como alimento?',
+        show_question: false,
         tip: 'Não... esta não é a resposta correta. Vou te dar uma dica!:\nSoja é um dos alimentos mais importantes do mundo! E seu óleo pode ser usado também para produzir biodiesel.',
         img: 'pergunta_10_v2.jpg',
         answers: [
