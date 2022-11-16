@@ -1,6 +1,7 @@
 *, *::before, *::after {
     box-sizing: border-box;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
 }
 
 :root {
@@ -53,6 +54,8 @@ body.wrong {
     padding: 5px 10px;
     color: white;
     outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large;
 }
 
 .btn:hover{
@@ -85,8 +88,10 @@ body.wrong {
 }
 
 .center {
-    display: block;
+    display: flex;
     margin-left: auto;
     margin-right: auto;
     width: 60%;
+    justify-content: center;
+    align-items: center;
   }

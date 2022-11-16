@@ -5,13 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="styles.css" rel="stylesheet">
-    <script defer src="script.js"></script>
+    <script type="module" src="script.js"></script>
+
     <title>Quiz App</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container">        
         <div id="title-container">
-            <img id="title-img" src="img/topo_quiz.jpg" class="center"/>
+            <img id="title-img" src="img/inicial_app.png" class="center"/>
+            <div id="available-quizzes-container">
+                <h4 class="center">Escolha o seu desafio:</h4>
+                <select id="quizzes-drop-down" class="center"></select>
+                <br><br>
+            </div>
         </div>        
         <div id="question-container" class="hide">
             <div id="question">Question</div>
@@ -23,15 +29,12 @@
                 <button class="btn">Answer 4</button>
             </div>
         </div>
-        <div id="score-container" class="hide">            
-            <h3 id="score"></h2>
+        <div id="score-container" class="hide center">            
+            <h4 id="score"></h4>
         </div>        
-        <div class="controls">
-            <button id="start-btn" class="start-btn btn">Início</button>
-            <button id="next-btn" class="next-btn btn hide">Próximo</button>
-        </div>
-        <div id="tip-score-containaer" class="hide">            
-        </div>
+        <div class="controls">            
+            <button id="start-btn" class="start-btn btn">Iniciar</button>
+            <button id="next-btn" class="next-btn btn hide">Próximo</button>        
     </div>
 </body>
 </html>
