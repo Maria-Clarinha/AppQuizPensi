@@ -55,9 +55,7 @@ function addQuizzesToDropDownList() {
         
         let option = document.createElement("option");
         option.setAttribute('value', key);
-      
-        let optionText = document.createTextNode(data.quizzes[key].name);
-        option.appendChild(optionText);
+        option.setAttribute('label', data.quizzes[key].name);
       
         quizzesDropDown.appendChild(option);
       }
