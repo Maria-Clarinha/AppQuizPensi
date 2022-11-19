@@ -50,13 +50,15 @@ function loadQuizQuestions(quiz_id) {
 }
 
 function addQuizzesToDropDownList() {
-        
+
     for (let key in data.quizzes) {
-        
+
         let option = document.createElement("option");
         option.setAttribute('value', key);
-        option.setAttribute('label', data.quizzes[key].name);
-      
+
+        let optionText = document.createTextNode(data.quizzes[key].name);
+        option.appendChild(optionText);
+
         quizzesDropDown.appendChild(option);
       }
 }
