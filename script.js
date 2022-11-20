@@ -4,8 +4,6 @@
 // Stackoverflow: https://stackoverflow.com/questions/8683528/embed-image-in-a-button-element
 // freecodecamp.org: https://www.freecodecamp.org/news/how-to-read-json-file-in-javascript/
 
-import data from './quizzes.json' assert {type: 'json'};
-
 const titleContainerElement = document.getElementById('title-container')
 
 const scoreContainerElement = document.getElementById('score-container')
@@ -22,13 +20,27 @@ const questionImgElement = document.getElementById('question-img')
 
 const answerButtonsElement = document.getElementById('answer-buttons')
 
-let shuffledQuestions, currentQuestionIndex, score=0, selectedQuiz=0, questions, finishedQuiz=false
+let quizzes
+let shuffledQuestions, currentQuestionIndex, questions
+let score=0, selectedQuiz=0, finishedQuiz=false
 
+//////////////////////////////////////////////////////////////////////////////
+
+document.body.onload = onLoad;
 
 // Ao carregar a página
+function onLoad(){
 
-addQuizzesToDropDownList();
-loadQuizQuestions(selectedQuiz);
+    fetch("./quizzes.json")
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            quizzes = data.quizzes
+
+            addQuizzesToDropDownList(quizzes);;
+        })
+}
 
 // Eventos
 
@@ -40,27 +52,25 @@ nextButton.addEventListener('click', () => {
 
 quizzesDropDown.addEventListener("change", e => {    
     selectedQuiz = e.target.value;
- })
+})
 
 
 // Funções
 
 function loadQuizQuestions(quiz_id) {
-    questions = data.quizzes[quiz_id].questions;
+    questions = quizzes[quiz_id].questions;
 }
 
-function addQuizzesToDropDownList() {
-
-    for (let key in data.quizzes) {
-
-        let option = document.createElement("option");
-        option.setAttribute('value', key);
-
-        let optionText = document.createTextNode(data.quizzes[key].name);
-        option.appendChild(optionText);
-
-        quizzesDropDown.appendChild(option);
-      }
+function addQuizzesToDropDownList(quizzes) {
+        
+    for (let key in quizzes) {
+        
+        const option = document.createElement("option");
+        option.value = key;
+        option.label = quizzes[key].name;
+      
+        quizzesDropDown.add(option);
+    }
 }
 
 
